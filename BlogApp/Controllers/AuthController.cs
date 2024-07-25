@@ -19,5 +19,11 @@ namespace BlogApp.API.Controllers
             return NoContent();
 
         }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginDto dto)
+        {
+            return Ok(await _userManager.LoginAsync(dto));
+
+        }
     }
 }

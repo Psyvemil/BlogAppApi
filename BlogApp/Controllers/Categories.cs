@@ -2,6 +2,7 @@
 using BlogApp.BL.Services.Exeptions.Category;
 using BlogApp.BL.Services.Exeptions.Common;
 using BlogApp.BL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace BlogApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class Categories(ICategoryService _service) : ControllerBase
     {
         [HttpGet]
