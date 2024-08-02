@@ -3,6 +3,7 @@ using BlogApp.BL;
 using BlogApp.BL.Profiles;
 using BlogApp.BL.Services.Interfaces;
 using BlogApp.Core.Entities;
+using BlogApp.DAL;
 using BlogApp.DAL.Contexts;
 using BlogApp.DAL.Repositories.Implements;
 using BlogApp.DAL.Repositories.Interfaces;
@@ -24,7 +25,9 @@ namespace BlogApp
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
             builder.Services.AddFluentValidation(opt=>
                 {
                     opt.RegisterValidatorsFromAssemblyContaining<CategoryService>();
@@ -67,8 +70,8 @@ namespace BlogApp
                 opt.Password.RequireNonAlphanumeric=false;
 
             }).AddDefaultTokenProviders().AddEntityFrameworkStores <AppDbContext>();
-           
 
+            builder.Services.AddRepositories();
             builder.Services.AddServices();
 
             builder.Services.AddAuthentication(

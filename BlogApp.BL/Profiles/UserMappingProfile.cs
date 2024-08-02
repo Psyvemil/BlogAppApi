@@ -14,6 +14,7 @@ namespace BlogApp.BL.Profiles
         public UserMappingProfile()
         {
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<AppUser,AuthorDto>();
         }
     }
 }

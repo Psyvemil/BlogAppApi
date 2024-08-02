@@ -13,8 +13,9 @@ namespace BlogApp.DAL.Repositories.Implements
 {
     public class Repository<TEntity>(AppDbContext _context) : IRepository<TEntity> where TEntity : BaseEntitty, new()
     {
-        
-        DbSet<TEntity> Table = _context.Set<TEntity>();
+
+        public DbSet<TEntity> Table => _context.Set<TEntity>();
+
 
         public async Task CreateAsync(TEntity entity)
         {
@@ -43,9 +44,14 @@ namespace BlogApp.DAL.Repositories.Implements
             return await Table.FindAsync(id);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(params string[] includes)
         {
-            return Table.AsQueryable();
+            var query= Table.AsQueryable();
+            foreach ( var include in includes )
+            {
+            query=query.Include(include); 
+            }
+            return query;
         }
 
         public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> expression)

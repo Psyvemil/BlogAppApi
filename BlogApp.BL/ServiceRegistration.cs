@@ -18,11 +18,11 @@ namespace BlogApp.BL
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+           
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ITokenHandler,TokenHandler>();
-            //services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddHttpContextAccessor(); 
+            services.AddScoped<IBlogService, BlogService>();
             //services.AddScoped<IBlogLikeRepository, BlogLikeRepository>();
             //services.AddScoped<ICommentRepository, CommentRepository>();
         }

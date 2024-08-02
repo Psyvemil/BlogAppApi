@@ -4,6 +4,7 @@ using BlogApp.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogApp.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240726222735_blogTable")]
+    partial class blogTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,7 +122,7 @@ namespace BlogApp.DAL.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 3, 0, 33, 47, 102, DateTimeKind.Local).AddTicks(9750));
+                        .HasDefaultValue(new DateTime(2024, 7, 27, 2, 27, 34, 552, DateTimeKind.Local).AddTicks(4740));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -142,7 +145,7 @@ namespace BlogApp.DAL.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("BlogApp.Core.Entities.BlogCategory", b =>
@@ -165,7 +168,7 @@ namespace BlogApp.DAL.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BlogCategories");
+                    b.ToTable("BlogCategory");
                 });
 
             modelBuilder.Entity("BlogApp.Core.Entities.Category", b =>

@@ -9,6 +9,6 @@ namespace BlogApp.Core.Entities.Commons
     public class BaseEntitty
     {
         public int Id { get; set; }
-        public bool IsDeleted { get; set; }
+        public  bool IsDeleted { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BlogApp.Core.Entities.Commons;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace BlogApp.DAL.Repositories.Interfaces
 {
     public interface  IRepository<TEntity> where TEntity : BaseEntitty ,new()
     {
-        IQueryable<TEntity> GetAll();
+        public DbSet<TEntity> Table { get; }
+        IQueryable<TEntity> GetAll(params string[] include );
         IQueryable<TEntity> FindAll(Expression<Func<TEntity,bool>> expression);
         
         public Task<TEntity> GetSingleAsync(Expression<Func<TEntity,bool>> expression);
