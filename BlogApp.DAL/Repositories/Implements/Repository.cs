@@ -64,9 +64,19 @@ namespace BlogApp.DAL.Repositories.Implements
             return await Table.AnyAsync(expression);
         }
 
+        public void RevertSoftDelete(TEntity entity)
+        {
+            entity.IsDeleted = false;
+        }
+
         public async Task SaveAsync()
         {
           await _context.SaveChangesAsync();
+        }
+
+        public void SoftDelete(TEntity entity)
+        {
+            entity.IsDeleted = true;
         }
     }
 }

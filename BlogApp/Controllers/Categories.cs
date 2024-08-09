@@ -25,7 +25,7 @@ namespace BlogApp.API.Controllers
             {
                 return Ok(await _service.GetByIdAsync(id));
             }
-            catch (NegativIdExeption ex)
+            catch (NegativIdException ex)
             {
                 return BadRequest(new{ Message = ex.Message});
             }

@@ -14,7 +14,7 @@ namespace BlogApp.BL.Dtos.BlogDtos
         public string Title { get; set; }
         public string Description { get; set; }
         public string CoverImageUrl { get; set; }
-        public IFormFile CoverImageFile { get; set; }
+        //public IFormFile CoverImageFile { get; set; }
         public IEnumerable<int> CategoryIds { get; set; }
     }
     public class BlogCreateDtoValidator : AbstractValidator<BlogCreateDto>

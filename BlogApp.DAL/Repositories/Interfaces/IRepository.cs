@@ -21,6 +21,8 @@ namespace BlogApp.DAL.Repositories.Interfaces
 
         public Task CreateAsync(TEntity entity);
         public void Delete(TEntity entity);
+        public void SoftDelete(TEntity entity);
+        public void RevertSoftDelete(TEntity entity);   
         public Task DeleteAsync(int id);
 
         public Task SaveAsync();

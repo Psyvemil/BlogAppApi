@@ -5,7 +5,8 @@ namespace BlogApp.BL.HelperServices.Interfaces
 {
     public interface ITokenHandler                                                    //token service or handler
     {
-        TokenResponsDto CreateToken(AppUser user, int expires = 60);
-
+        TokenResponsDto CreateToken(AppUser user, double expires = 60);
+      
+        
     }
 }

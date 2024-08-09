@@ -76,7 +76,7 @@ namespace BlogApp.BL.Services.Interfaces
        async Task<Category> _gategoryAsync(int id)
         {
 
-            if (id <= 0) throw new NegativIdExeption();
+            if (id <= 0) throw new NegativIdException();
             var entity = await _repo.FindByIdAsync(id);
             if (entity == null) throw new CategoryNotFoundException();
             return entity;

@@ -15,29 +15,34 @@ namespace BlogApp.BL.HelperServices.Implements
 {
     internal class TokenHandler(IConfiguration _configuration) : ITokenHandler
     {
-        public TokenResponsDto CreateToken(AppUser user, int expires = 60)
+        public TokenResponsDto CreateToken(AppUser user, double expires = 60)
         {
            
             List<Claim> claims = new List<Claim>()
             {
-                new Claim (ClaimTypes.NameIdentifier, user.UserName),
-                new Claim (ClaimTypes.NameIdentifier,user.Id)
+                 new Claim(ClaimTypes.Name, user.UserName),
+                 new Claim(ClaimTypes.NameIdentifier, user.Id),
+                 new Claim(ClaimTypes.Email, user.Email),
+                 new Claim(ClaimTypes.GivenName, user.Name),
+                 new Claim(ClaimTypes.Surname, user.Surname)
             };
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecurityKey"]));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecurityKey"]));
             SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            JwtSecurityToken jwt = new JwtSecurityToken(
-                _configuration["JWT:Issuer"],
-                _configuration["JWT:Audience"],
+            JwtSecurityToken jwtSecurity = new JwtSecurityToken(
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
                 claims,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddMinutes(expires));
+                DateTime.UtcNow.AddMinutes(expires),
+                credentials);
             JwtSecurityTokenHandler jwtHandler = new JwtSecurityTokenHandler();
-            string token = jwtHandler.WriteToken(jwt);
+            string token = jwtHandler.WriteToken(jwtSecurity);
+
             return new()
             {
                 Token = token,
-                Expires = jwt.ValidTo,
-                UserName = user.UserName,
+                Expires = jwtSecurity.ValidTo,
+                Username = user.UserName,
             };
         }
     }

@@ -11,6 +11,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -74,11 +75,11 @@ namespace BlogApp
             builder.Services.AddRepositories();
             builder.Services.AddServices();
 
-            builder.Services.AddAuthentication(
-                opt => 
-                {
-                    opt.DefaultAuthenticateScheme= JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
+           builder.Services.AddAuthentication(
+                opt =>
+                {       
+                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 }
                 ).AddJwtBearer(
                 opt => 
@@ -107,7 +108,10 @@ namespace BlogApp
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseSwaggerUI(c =>
+            {
+                c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
+            });
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

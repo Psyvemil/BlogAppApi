@@ -1,26 +1,47 @@
 ﻿using AutoMapper;
 using BlogApp.BL.Dtos.BlogDtos;
 using BlogApp.BL.Dtos.CategoryDtos;
+using BlogApp.BL.Services.Exceptions.Common;
+using BlogApp.BL.Services.Exceptions.User;
+using BlogApp.BL.Services.Exeptions.Category;
 using BlogApp.BL.Services.Interfaces;
 using BlogApp.Core.Entities;
 using BlogApp.DAL.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BlogApp.BL.Services.Implements
 {
-    public class BlogService(IBlogRepository _repo,IMapper _mapper ,IHttpContextAccessor _context) : IBlogService
+    public class BlogService(IBlogRepository _repo,IMapper _mapper ,IHttpContextAccessor _context,ICategoryRepository _categoryRepo,UserManager<AppUser> _userManager) : IBlogService
     {
-        readonly string userId = _context.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        readonly string? userId = _context.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         public async Task CreateAsync(BlogCreateDto dto)
         {
+            if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentNullException();
+            if (!await _userManager.Users.AnyAsync(u => u.Id == userId)) throw new UserNotFoundException();
+            List<BlogCategory> blogCats = new();
+            foreach (var id in dto.CategoryIds)
+            {
+                //var cat = await _categoryRepo.FindByIdAsync(id);
+                //if (cat == null) throw new CategoryNotFoundException();
+
+                if (!await _categoryRepo.IsExistAsync(c => c.Id == id && !c.IsDeleted)) throw new CategoryNotFoundException();
+                blogCats.Add(new BlogCategory { CategoryId = id });
+            }
             Blog blog = _mapper.Map<Blog>(dto);
+            blog.AppUserId = userId;
+            blog.BlogCategories = blogCats;
+            await _repo.CreateAsync(blog);
+            await _repo.SaveAsync();
         }
 
         public async Task<IEnumerable<BlogListItemDto>> GetAllAsync()
@@ -46,14 +67,25 @@ namespace BlogApp.BL.Services.Implements
             return _mapper.Map<IEnumerable<BlogListItemDto>>(entity);
         }
 
-        public Task<BlogDetailDto> GetByIdAsync(int id)
+        public async Task<BlogDetailDto> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+           var entity = await _repo.FindByIdAsync(id);
+           if (entity == null) throw new NotFoundException<Blog>();
+            entity.ViewerCount++;
+           await _repo.SaveAsync();
+           return _mapper.Map<BlogDetailDto>(entity);
         }
 
-        public Task RemoveAsync(int id)
+        public async Task RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentNullException();
+            if (!await _userManager.Users.AnyAsync(u => u.Id == userId)) throw new UserNotFoundException();
+            var entity = await _repo.FindByIdAsync(id);
+            if (entity == null) throw new NotFoundException<Blog>();
+            if (entity.AppUserId != userId) throw new Exception("icaze yoxdur ");
+            _repo.SoftDelete(entity);
+            await _repo.SaveAsync();
+
         }
 
         public Task UpdateAsync(int id, BlogUpdateDto dto)
