@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BlogApp.BL.Dtos.CategoryDtos;
-using BlogApp.BL.Services.Exeptions.Category;
-using BlogApp.BL.Services.Exeptions.Common;
+using BlogApp.BL.Exceptions.Category;
+using BlogApp.BL.Exceptions.Common;
+
 using BlogApp.Core.Entities;
 using BlogApp.DAL.Repositories.Interfaces;
 using FluentValidation;
@@ -78,7 +79,7 @@ namespace BlogApp.BL.Services.Interfaces
 
             if (id <= 0) throw new NegativIdException();
             var entity = await _repo.FindByIdAsync(id);
-            if (entity == null) throw new CategoryNotFoundException();
+            if (entity == null) throw new NotFoundException<Category>();
             return entity;
         }
     }

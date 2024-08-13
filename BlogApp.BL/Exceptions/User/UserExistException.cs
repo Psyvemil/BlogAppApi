@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogApp.BL.Services.Exeptions.User
+namespace BlogApp.BL.Exceptions.User
 {
     public class UserExistException : Exception
     {
-        public UserExistException():base("username or email alredy existed")
+        public UserExistException() : base("username or email alredy existed")
         { }
-        public UserExistException(string? message) :  base(message)
+        public UserExistException(string? message) : base(message)
         { }
-            
+
     }
 }

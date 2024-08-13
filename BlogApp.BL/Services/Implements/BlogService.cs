@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using BlogApp.BL.Dtos.BlogDtos;
 using BlogApp.BL.Dtos.CategoryDtos;
-using BlogApp.BL.Services.Exceptions.Common;
-using BlogApp.BL.Services.Exceptions.User;
-using BlogApp.BL.Services.Exeptions.Category;
+using BlogApp.BL.Exceptions.Category;
+using BlogApp.BL.Exceptions.Common;
+using BlogApp.BL.Exceptions.User;
+
 using BlogApp.BL.Services.Interfaces;
 using BlogApp.Core.Entities;
 using BlogApp.DAL.Repositories.Interfaces;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BlogApp.BL.Dtos.UserDtos;
+using BlogApp.BL.Exceptions.User;
 using BlogApp.BL.HelperServices.Interfaces;
-using BlogApp.BL.Services.Exceptions.User;
-using BlogApp.BL.Services.Exeptions.User;
+
 using BlogApp.BL.Services.Interfaces;
 using BlogApp.Core.Entities;
 using Microsoft.AspNetCore.Identity;

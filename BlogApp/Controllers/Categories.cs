@@ -1,6 +1,6 @@
 ﻿using BlogApp.BL.Dtos.CategoryDtos;
-using BlogApp.BL.Services.Exeptions.Category;
-using BlogApp.BL.Services.Exeptions.Common;
+using BlogApp.BL.Exceptions.Category;
+using BlogApp.BL.Exceptions.Common;
 using BlogApp.BL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

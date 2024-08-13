@@ -1,4 +1,5 @@
 
+using BlogApp.API.Helpers;
 using BlogApp.BL;
 using BlogApp.BL.Profiles;
 using BlogApp.BL.Services.Interfaces;
@@ -116,6 +117,7 @@ namespace BlogApp
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCustomExceptionHandler();
 
             app.MapControllers();
 
