@@ -16,6 +16,7 @@ namespace BlogApp.Core.Entities
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public IEnumerable<BlogCategory> BlogCategories { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
 
     }
 }

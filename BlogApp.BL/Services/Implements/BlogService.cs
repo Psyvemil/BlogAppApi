@@ -64,7 +64,7 @@ namespace BlogApp.BL.Services.Implements
             //    dto.Add(dtoItem);
             //}
             //return dto;
-            var entity = _repo.GetAll("AppUser", "BlogCategories", "BlogCategories.Category");
+            var entity = _repo.GetAll("AppUser", "BlogCategories", "BlogCategories.Category","Comments" ,"Comments.Children","Comments.AppUser");
             return _mapper.Map<IEnumerable<BlogListItemDto>>(entity);
         }
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogApp.DAL.Configurations
 {
-    internal class BlogCategoryConfigutarion : IEntityTypeConfiguration<BlogCategory>
+    public class BlogCategoryConfigutarion : IEntityTypeConfiguration<BlogCategory>
     {
         public void Configure(EntityTypeBuilder<BlogCategory> builder)
         {

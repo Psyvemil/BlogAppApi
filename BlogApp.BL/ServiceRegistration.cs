@@ -23,8 +23,8 @@ namespace BlogApp.BL
             services.AddScoped<ITokenHandler,TokenHandler>();
             services.AddHttpContextAccessor(); 
             services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<ICommentService, CommentService>();
             //services.AddScoped<IBlogLikeRepository, BlogLikeRepository>();
-            //services.AddScoped<ICommentRepository, CommentRepository>();
         }
     }
 }

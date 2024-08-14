@@ -13,6 +13,7 @@ namespace BlogApp.Core.Entities
         public string Surname { get; set; }
         public string? ImageUrl { get; set; }
         public IEnumerable<Blog> Blogs { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
 
     }
 }

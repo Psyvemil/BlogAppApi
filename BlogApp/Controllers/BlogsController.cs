@@ -1,4 +1,5 @@
 ﻿using BlogApp.BL.Dtos.BlogDtos;
+using BlogApp.BL.Dtos.CommentDtos;
 using BlogApp.BL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +9,7 @@ namespace BlogApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController(IBlogService _blogService) : ControllerBase
+    public class BlogsController(IBlogService _blogService,ICommentService _commentService) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -36,6 +37,13 @@ namespace BlogApp.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _blogService.RemoveAsync(id);
+            return Accepted();
+        }
+        [Authorize]
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> Comment(int id,CommentCreateDto dto )
+        {
+            await _commentService.CreateAsync(id ,dto);
             return Accepted();
         }
     }

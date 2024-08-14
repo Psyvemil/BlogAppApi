@@ -1,4 +1,5 @@
 ﻿using BlogApp.BL.Dtos.CategoryDtos;
+using BlogApp.BL.Dtos.CommentDtos;
 using BlogApp.BL.Dtos.UserDtos;
 using BlogApp.Core.Entities;
 using System;
@@ -22,6 +23,7 @@ namespace BlogApp.BL.Dtos.BlogDtos
         public AuthorDto AppUser { get; set; }
        //public IEnumerable<CategoryListItemDto> Categories { get; set; }
         public IEnumerable<BlogCategoryDto> BlogCategories { get; set; }
+        public IEnumerable<CommentListItemDto> Comments { get; set; }
 
     }
 }
